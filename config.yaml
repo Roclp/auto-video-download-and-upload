@@ -1,0 +1,32 @@
+#中间过程会生成的音频文件文件夹
+output: videos\temp\
+#翻译时开启多少线程
+translate_threads: 1
+#翻译源语言
+from: en
+#翻译目标语言
+to: zh
+#视频文件夹
+path: ""
+# path: "videos/"
+#视频子文件夹
+dir: 我的世界：变成各种角色生存100天系列
+# dir: 我的世界：大神Dream系列
+# dir: 我的世界：MC的发展历系列
+# dir: 我的世界：大佬挑战记录系列
+
+#投稿前缀
+prefix: 【ExamQuestion】
+#转载人名称
+biliname: qianli112
+#投稿分区
+tid: 201
+#proxy
+# proxy: socks://127.0.0.1:7890
+#playlist url
+# url: https://www.youtube.com/playlist?list=PLx7-Q20A1VYIvlyLkptNIEhmb6o6NntWi
+
+url: https://www.youtube.com/watch?v=xxxxxxxxxxx
+#百度翻译密钥
+appid: xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+secretKey: xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
