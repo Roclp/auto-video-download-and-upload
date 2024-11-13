@@ -37,7 +37,11 @@ ydl_opts = {
     'retries': 10,
     'writeautomaticsub': True,
     'writeinfojson': True,
-    'writethumbnail': 'maxresdefault'
+    'writethumbnail': 'maxresdefault',
+
+
+    'concurrent-fragments': 16, # 并发帧
+    'http-chunk-size': '10M' , # 分片大小
 }
 
 
