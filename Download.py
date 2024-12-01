@@ -4,7 +4,7 @@ import yt_dlp
 
 # path = config['path']
 # proxy = config['proxy']
-path='videos/'
+path='../videos/'
 
 URLS = [
     # "https://www.youtube.com/playlist?list=PLsFouWTyKWsq6XkYDG43VvTNrFnf8dRaX",
