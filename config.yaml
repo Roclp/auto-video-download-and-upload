@@ -7,7 +7,7 @@ from: en
 #翻译目标语言
 to: zh
 #视频文件夹
-path: ""
+path: "../"
 # path: "videos/"
 #视频子文件夹
 dir: 我的世界：变成各种角色生存100天系列
@@ -16,9 +16,9 @@ dir: 我的世界：变成各种角色生存100天系列
 # dir: 我的世界：大佬挑战记录系列
 
 #投稿前缀
-prefix: 【ExamQuestion】
+# prefix: 【ExamQuestion】
 #转载人名称
-biliname: qianli112
+# biliname: qianli112
 #投稿分区
 tid: 201
 #proxy
@@ -30,3 +30,11 @@ url: https://www.youtube.com/watch?v=xxxxxxxxxxx
 #百度翻译密钥
 appid: xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 secretKey: xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+douyin_cookie: 'Cookies/douyin.json'
+kuaishou_cookie: 'Cookies/kuaishou.json'
+xigua_cookie: 'Cookies/xigua.json'
+
+time_list: 7,9,13,17,20
+# time_list: 8,11,14,16,19,21
+# time_list: 11,15,18,20

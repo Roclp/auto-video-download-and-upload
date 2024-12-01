@@ -332,10 +332,15 @@ class KuaiShouVideo(object):
         # 新版
         # 悬浮 _default-cover_y5cqm_68 _big_y5cqm_77
         await page.locator('._default-cover_y5cqm_68._big_y5cqm_77').hover()
+        await asyncio.sleep(0.2)
         await page.locator('._cover-editor-text_y5cqm_58:has-text("编辑")').click()
+        await asyncio.sleep(0.2)
         await page.locator('.ant-btn.ant-btn-default:has-text("重选封面")').click()
+        await asyncio.sleep(0.2)
         await page.locator('#microSupport input[type=file][accept^="image/"]').set_input_files(self.cover_path)
+        await asyncio.sleep(2)
         await page.locator('.ant-btn.ant-btn-default._footer-btn_1nlbi_40:has-text("完成")').click()
+        await asyncio.sleep(5)
 
 
         # await asyncio.sleep(10000)

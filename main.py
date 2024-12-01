@@ -1,10 +1,10 @@
-from DouyinUpload import DouYinVideo
-from KuaishouUpload import KuaiShouVideo
-from XiguaUpload import XiGuaVideo
-from split_video import split_video_ffmpeg
-from get_schedule_time import generate_schedule_within_7_days
+from Uploaders.DouyinUpload import DouYinVideo
+from Uploaders.KuaishouUpload import KuaiShouVideo
+from Uploaders.XiguaUpload import XiGuaVideo
+from Utils.split_video import split_video_ffmpeg
+from Utils.get_schedule_time import generate_schedule_within_7_days
 
-from process_cover import enhance_cover
+from Utils.process_cover import enhance_cover
 from multiprocessing import Process, cpu_count, Pool
 
 import asyncio
@@ -30,29 +30,24 @@ def getFileNames(file_path):
 '''
 
 if __name__ == '__main__':
-    # print('core number is {}'.format(cpu_count()))  # 12
-    time_list=generate_schedule_within_7_days(7,9,13,17,20)
-    # time_list=generate_schedule_within_7_days(8,11,14,16,19,21)
-    # time_list=generate_schedule_within_7_days(11,15,18,20)
-    index=0
+    
 
     with open('config.yaml', encoding='utf-8') as f:
         config = yaml.load(f.read(), Loader=yaml.FullLoader)
-    f.close()
     fullpath = config['path']+config['dir']
+    douyin_cookie = config['douyin_cookie']
+    kuaishou_cookie = config['kuaishou_cookie']
+    xigua_cookie = config['xigua_cookie']
+    
+    time_list_str = config['time_list']
+    time_list = [int(t.strip()) for t in time_list_str.split(',')]
+    print(time_list)
+    time_list=generate_schedule_within_7_days(*time_list)
+    
+    index=0
     print(fullpath)
-    # videoFile = getFileNames(fullpath)
-    # print(f"{fullpath} 文件夹下有 {len(videoFile)} 个视频")
     
-    douyin_cookie = 'douyin.json'
-    kuaishou_cookie = 'kuaishou.json'
-    xigua_cookie = 'xigua.json'
-
     # p=Pool(3)
-
-    
-    # publish_datetimes = generate_schedule_time_next_day(file_num, 1, daily_times=[16])
-    # cookie_setup = asyncio.run(douyin_setup(account_file, handle=False))
 
     videoFile = getFileNames(fullpath)
     for video in videoFile:
@@ -112,7 +107,7 @@ if __name__ == '__main__':
             
 
             app = DouYinVideo(title, file, douyin_cover_path,douyin_tags, time, douyin_cookie)
-            # asyncio.run(app.main(), debug=False)
+            asyncio.run(app.main(), debug=False)
 
             # 快手使用抖音封面
             app = KuaiShouVideo(title, file, douyin_cover_path,kuaishou_tags, time, kuaishou_cookie)

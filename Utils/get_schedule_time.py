@@ -4,7 +4,8 @@ from datetime import datetime, timedelta
 def generate_schedule_within_7_days(*hour_time_list):
     now = datetime.now()
     schedule = []
-
+    day_cnt=13
+    # day_cnt=6
     # 循环7天，包括今天
     for day_offset in range(14):
         # 计算目标日期
@@ -16,7 +17,7 @@ def generate_schedule_within_7_days(*hour_time_list):
             # 确保时间点在当前时间之后，并且在24小时*6天的时间范围内
             if time_point > now and time_point < now+timedelta(hours=2):
                 schedule.append(0)
-            elif time_point > now and time_point < now + timedelta(hours=24*6):
+            elif time_point > now and time_point < now + timedelta(hours=24*day_cnt):
                 schedule.append(time_point)
 
     return schedule
