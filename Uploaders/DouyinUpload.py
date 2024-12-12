@@ -134,7 +134,8 @@ class DouYinVideo(object):
             # 点击 "上传视频" 按钮
             # await page.locator(".upload-btn--9eZLd").set_input_files(self.file_path)
             # await page.locator("[name='upload-btn']").set_input_files(self.file_path)
-            await page.locator("input[accept='video/*']").set_input_files(self.file_path)
+            # await page.locator("input[accept='video/*']").set_input_files(self.file_path)
+            await page.locator('input[accept="video/x-flv,video/mp4,video/x-m4v,video/*,.flv,.avi,.wmv,.webm,.ts,.mp4,.mpeg4,.mov,.m4v,.mpg,.mkv,.m4"]').set_input_files(self.file_path)
         except Exception as e:
             print('[+] cookie文件不存在或已失效，即将自动打开浏览器，请扫码登录，登陆后会自动生成cookie文件')
             await douyin_cookie_gen(self.account_file)
