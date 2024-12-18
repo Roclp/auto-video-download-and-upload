@@ -195,8 +195,9 @@ class DouYinVideo(object):
         # 选择视频封面
         #await asyncio.sleep(1000000000000000)
         # await page.locator('div.cover-lTOzOo').click()
-        await page.locator('div.filter-k_CjvJ').nth(1).click()
         await asyncio.sleep(1)
+        await page.locator('.filter-k_CjvJ').nth(1).click()
+        await asyncio.sleep(2)
 
         # 设置竖封面 semi-button semi-button-primary semi-button-light primary-RstHX_
         await page.locator('.semi-button.semi-button-primary.semi-button-light.primary-RstHX_').click()

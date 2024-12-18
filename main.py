@@ -107,7 +107,7 @@ if __name__ == '__main__':
             
 
             app = DouYinVideo(title, file, douyin_cover_path,douyin_tags, time, douyin_cookie)
-            asyncio.run(app.main(), debug=False)
+            #asyncio.run(app.main(), debug=False)
 
             # 快手使用抖音封面
             app = KuaiShouVideo(title, file, douyin_cover_path,kuaishou_tags, time, kuaishou_cookie)
