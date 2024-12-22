@@ -168,31 +168,15 @@ class KuaiShouVideo(object):
         # 定位输入框并输入文本
         # 假设您有一个名为 page 的 Playwright 页面对象
         await asyncio.sleep(1)
-        elements = await page.locator("input.ant-select-selection-search-input").all()
+        # elements = await page.locator("input.ant-select-selection-search-input").all()
 
         # print(elements)
 
 
-        # 关联变现任务
-        # await asyncio.sleep(1)
-        # await page.locator('span:has-text("关联变现任务")').click()
-        # 定位到特定的span元素
-        # span_element = page.locator(
-        #     "#joyride-wrapper > div._edit-container_9braw_7 > div:nth-child(2) > "
-        #     "div._edit-section_9braw_21._last_9braw_25 > div._edit-section-form_9braw_90 > "
-        #     "div.ant-spin-nested-loading > div > div > div > label:nth-child(3) > span:nth-child(2)"
-        # )
-        # await asyncio.sleep(0.3)
-        # # 现在可以使用span_element来执行操作，例如点击
-        # await span_element.click(timeout=100000)
-
-        # 获取第一个元素
-        # input_locator= elements[0]
-        # await input_locator.click()
-        
-        # #  点击 input_locator 下方10像素的位置
-        # # 获取元素的边界框信息
-        # box = await input_locator.bounding_box()
+        # 作者服务
+        # elements=await page.locator("div.ant-select-selector").all()
+        # await elements[0].click()
+        # box = await elements[0].bounding_box()
         # # 检查边界框是否存在
         # if box:
         #     # 计算点击位置：元素底部向下10像素的位置
@@ -203,6 +187,8 @@ class KuaiShouVideo(object):
         #     await page.mouse.click(click_x, click_y)
         # else:
         #     print("元素没有在页面上，无法获取边界框信息")
+
+        # await elements[1].click()
 
         
         # # 获取第一个元素
@@ -343,7 +329,7 @@ class KuaiShouVideo(object):
         await asyncio.sleep(5)
 
 
-        # await asyncio.sleep(10000)
+        # await asyncio.sleep(1000000000)
         # 点击发布按钮
         # await page.locator('button:has-text("发布")').click()
         await page.locator('._button_si04s_1._button-primary_si04s_60:has-text("发布")').click()

@@ -72,10 +72,10 @@ class DouYinVideo(object):
         # 选择包含特定文本内容的 label 元素
         # label_element = page.locator("label.radio--4Gpx6:has-text('定时发布')")
         # label_element = page.locator("[class^='radio']:has-text('定时发布')")
-
-        label_element = page.locator("xpath=/html/body/div[1]/div/div[2]/div[3]/div/div/div/div[2]/div/div/div/div[2]/div[1]/div[12]/div[2]/div[2]/label[2]")
+        
+        # label_element = page.locator("xpath=/html/body/div[1]/div/div[2]/div[3]/div/div/div/div[2]/div/div/div/div[2]/div[1]/div[12]/div[2]/div[2]/label[2]")
         await asyncio.sleep(0.3)
-        label_element = page.locator(".one-line-pe7juM:nth-child(2)")
+        label_element = page.locator("span:has-text('定时发布')")
         await asyncio.sleep(0.3)
         # 在选中的 label 元素下点击 checkbox
         await label_element.click()
@@ -83,7 +83,7 @@ class DouYinVideo(object):
         publish_date_hour = publish_date.strftime("%Y-%m-%d %H:%M")
 
         await asyncio.sleep(1)
-        await page.locator('.semi-input[placeholder="日期和时间"]').click()
+        await page.locator('.semi-input.semi-input-default[placeholder="日期和时间"]').click()
         await page.keyboard.press("Control+KeyA")
         await page.keyboard.type(str(publish_date_hour))
         await page.keyboard.press("Enter")
@@ -245,9 +245,25 @@ class DouYinVideo(object):
         # await page.locator('button.semi-button.semi-button-primary.semi-button-light.finish-Y2Ps_0:nth-child(2)').click()
         
 
-        
-        
-        
+        # 选择星图任务
+        await page.locator('.star-btn-poAMX1.star-btn-active-KNLPgP').click()
+        await page.locator('.card-container-B9zMo8').click()
+        await page.locator('button.button-dhlUZE.my-btn-R4WFto.primary-cECiOJ:has-text("确认")').click()
+
+        # 添加标签 购物车
+        await page.locator('div.semi-select.select-lJTtRL.semi-select-single').click()
+        await page.locator('div.select-dropdown-option-video:has-text("购物车")').click()
+        url_locator=page.locator('input.input-inner-JYpXOO.form-aMjYYj[placeholder="粘贴商品链接"]')
+        await url_locator.click()
+        product_url="0m:/. 07/04 W@M.Wz 【正版我的积木世界磁力方块全套mc吸铁石迷你世界磁吸拼搭磁铁玩具】复制此条消息打开抖音，查看商品详情。【ŠŠz82lO0lw65SpS8ŠŠ】	 https://v.douyin.com/iUXcB5gG/"
+        await url_locator.fill(product_url)
+        await page.locator('span.cart-mybtn-jPFx5X:has-text("添加链接")').click()
+        product_title="【正版MC积木世界！】"
+        product_title_locator=page.locator('input.semi-input.semi-input-default[placeholder="请输入商品短标题"]')
+        await product_title_locator.click()
+        await product_title_locator.fill(product_title)
+        await page.locator('button.button-dhlUZE.modal-btn-rsq2u7.primary-cECiOJ:has-text("完成编辑")').click()
+
        
         # 更换可见元素
         # await page.locator('div.semi-select span:has-text("输入地理位置")').click()
@@ -314,7 +330,7 @@ class DouYinVideo(object):
         # 添加挑战贴纸
         # await page.locator('semi-select-selection-text.semi-select-selection-placeholder').click()
 
-        # await asyncio.sleep(100)
+        # await asyncio.sleep(1000000000000)
         
         # 判断视频是否发布成功
         while True:
