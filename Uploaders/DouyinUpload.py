@@ -11,15 +11,23 @@ async def cookie_auth(account_file):
     async with async_playwright() as playwright:
         browser = await playwright.chromium.launch(headless=True)
         context = await browser.new_context(storage_state=account_file)
+        context = await set_init_script(context)
         # 创建一个新的页面
         page = await context.new_page()
         # 访问指定的 URL
         await page.goto("https://creator.douyin.com/creator-micro/content/upload")
         try:
-            await page.wait_for_selector("div.boards-more h3:text('抖音排行榜')", timeout=5000)  # 等待5秒
+            await page.wait_for_url("https://creator.douyin.com/creator-micro/content/upload", timeout=5000)
+        except:
+            print("[+] 等待5秒 cookie 失效")
+            await context.close()
+            await browser.close()
+            return False
+        # 2024.06.17 抖音创作者中心改版
+        if await page.get_by_text('手机号登录').count():
             print("[+] 等待5秒 cookie 失效")
             return False
-        except:
+        else:
             print("[+] cookie 有效")
             return True
 
@@ -70,20 +78,14 @@ class DouYinVideo(object):
 
     async def set_schedule_time_douyin(self, page, publish_date):
         # 选择包含特定文本内容的 label 元素
-        # label_element = page.locator("label.radio--4Gpx6:has-text('定时发布')")
-        # label_element = page.locator("[class^='radio']:has-text('定时发布')")
-        
-        # label_element = page.locator("xpath=/html/body/div[1]/div/div[2]/div[3]/div/div/div/div[2]/div/div/div/div[2]/div[1]/div[12]/div[2]/div[2]/label[2]")
-        await asyncio.sleep(0.3)
-        label_element = page.locator("span:has-text('定时发布')")
-        await asyncio.sleep(0.3)
+        label_element = page.locator("[class^='radio']:has-text('定时发布')")
         # 在选中的 label 元素下点击 checkbox
         await label_element.click()
-        await asyncio.sleep(0.3)
+        await asyncio.sleep(1)
         publish_date_hour = publish_date.strftime("%Y-%m-%d %H:%M")
 
         await asyncio.sleep(1)
-        await page.locator('.semi-input.semi-input-default[placeholder="日期和时间"]').click()
+        await page.locator('.semi-input[placeholder="日期和时间"]').click()
         await page.keyboard.press("Control+KeyA")
         await page.keyboard.type(str(publish_date_hour))
         await page.keyboard.press("Enter")
@@ -167,6 +169,11 @@ class DouYinVideo(object):
         await input_locator.click()
         await input_locator.type(self.title[0:30])
 
+
+        # input_locator=page.locator('div[data-placeholder="写一个合适的标题，能让更多人看到"]')
+        # await input_locator.click()
+        # await input_locator.fill(self.title[0:30])
+
         # title_container = page.get_by_text('作品标题').locator("..").locator("xpath=following-sibling::div[1]").locator("input")
         # if await title_container.count():
         #     await title_container.fill(self.title[:30])
@@ -192,21 +199,29 @@ class DouYinVideo(object):
         
 
 
-        # 选择视频封面
-        #await asyncio.sleep(1000000000000000)
-        # await page.locator('div.cover-lTOzOo').click()
-        await asyncio.sleep(1)
-        await page.locator('.filter-k_CjvJ').nth(1).click()
-        await asyncio.sleep(2)
+        # # 选择视频封面
+        # # await asyncio.sleep(1000000000000000)
+        # await page.locator('div.filter-k_CjvJ').nth(1).click()
+        # await asyncio.sleep(0.2)
+        # accept="image/png,image/jpeg,image/jpg,image/bmp,image/webp,image/tif"
+        # # await page.locator("input[accept='image/png,image/jpeg,image/jpg,image/bmp,image/webp,image/tif']").nth(1).set_input_files(self.cover_path)
+        # await page.set_input_files(".semi-upload-hidden-input-replace", self.cover_path)
+        # # await page.locator('.semi-button.semi-button-primary.semi-button-light.secondary-zU1YLr').click()
+        # await page.locator('span.semi-button-content:has-text("完成")').click()
+        # await asyncio.sleep(2)
+        # await page.locator('div.filter-k_CjvJ').nth(2).click()
+        # await asyncio.sleep(0.2)
+        # # await page.locator("input[accept='image/png,image/jpeg,image/jpg,image/bmp,image/webp,image/tif']").nth(2).set_input_files(self.cover_path)
+        # await page.set_input_files(".semi-upload-hidden-input-replace", self.cover_path)
 
-        # 设置竖封面 semi-button semi-button-primary semi-button-light primary-RstHX_
-        await page.locator('.semi-button.semi-button-primary.semi-button-light.primary-RstHX_').click()
+        # # 设置竖封面 semi-button semi-button-primary semi-button-light primary-RstHX_
+        # # await page.locator('.semi-button.semi-button-primary.semi-button-light.primary-RstHX_').click()
         # await asyncio.sleep(10000000)
 
 
         # 重选底图 semi-button-content
-        await page.locator('.semi-button-content:has-text("重选底图")').click()
-        await asyncio.sleep(0.3)
+        # await page.locator('.semi-button-content:has-text("重选底图")').click()
+        # await asyncio.sleep(0.3)
         
      
         # 点击上传封面
@@ -219,16 +234,29 @@ class DouYinVideo(object):
         # await page.wait_for_selector('.semi-upload-hidden-input');
 
         # accept="image/png,image/jpeg,image/jpg,image/bmp,image/webp,image/tif"
-        await page.locator('.semi-upload-hidden-input').set_input_files(self.cover_path)
+        # await page.locator('.semi-upload-hidden-input-replace').set_input_files(self.cover_path)
         # await page.locator(".semi-upload-hidden-input").set_input_files(self.cover_path)
-        await asyncio.sleep(0.5)
+        # await page.locator("input[accept='image/png,image/jpeg,image/jpg,image/bmp,image/webp,image/tif'][class='semi-upload-hidden-input-replace']").set_input_files(self.cover_path)
+        # await asyncio.sleep(2)
  
-        # 完成 confirm-qvC4Vg 小封面完成
-        await page.locator('div.confirm-qvC4Vg:has-text("完成")').nth(1).click()
+        # # 完成 confirm-qvC4Vg 小封面完成
+        # # await page.locator('div.confirm-qvC4Vg:has-text("完成")').nth(1).click()
+        # print(333333333333)
+        # # 完成 semi-button semi-button-primary semi-button-light primary-RstHX_ 封面编辑完成 name="完成"
+        # # await page.locator('.semi-button.semi-button-primary.semi-button-light.primary-RstHX_').click()
+        # await page.locator('span.semi-button-content:has-text("完成")').nth(1).click()
+        # await asyncio.sleep(0.5)
 
-        # 完成 semi-button semi-button-primary semi-button-light primary-RstHX_ 封面编辑完成
-        await page.locator('.semi-button.semi-button-primary.semi-button-light.primary-RstHX_').click()
-
+        # await page.click('text="选择封面"')
+        # await page.wait_for_selector("div.semi-modal-content:visible")
+        # await page.click('text="设置竖封面"')
+        # await page.wait_for_timeout(2000)  # 等待2秒
+        # # 定位到上传区域并点击
+        # print(self.cover_path)
+        # await page.locator("div[class^='semi-upload upload'] >> input.semi-upload-hidden-input-replace").set_input_files(self.cover_path)
+        # await page.wait_for_timeout(2000)  # 等待2秒
+        # await page.locator("div[class^='extractFooter'] button:visible:has-text('完成')").click()
+        
         # await asyncio.sleep(100000000)
 
 
@@ -245,25 +273,35 @@ class DouYinVideo(object):
         # await page.locator('button.semi-button.semi-button-primary.semi-button-light.finish-Y2Ps_0:nth-child(2)').click()
         
 
-        # 选择星图任务
-        await page.locator('.star-btn-poAMX1.star-btn-active-KNLPgP').click()
-        await page.locator('.card-container-B9zMo8').click()
-        await page.locator('button.button-dhlUZE.my-btn-R4WFto.primary-cECiOJ:has-text("确认")').click()
+        # # 选择星图任务
+        # await page.locator('.star-btn-poAMX1.star-btn-active-KNLPgP').click()
+        # await page.locator('.card-container-B9zMo8').click()
+        # await page.locator('button.button-dhlUZE.my-btn-R4WFto.primary-cECiOJ:has-text("确认")').click()
 
-        # 添加标签 购物车
-        await page.locator('div.semi-select.select-lJTtRL.semi-select-single').click()
-        await page.locator('div.select-dropdown-option-video:has-text("购物车")').click()
-        url_locator=page.locator('input.input-inner-JYpXOO.form-aMjYYj[placeholder="粘贴商品链接"]')
-        await url_locator.click()
-        product_url="0m:/. 07/04 W@M.Wz 【正版我的积木世界磁力方块全套mc吸铁石迷你世界磁吸拼搭磁铁玩具】复制此条消息打开抖音，查看商品详情。【ŠŠz82lO0lw65SpS8ŠŠ】	 https://v.douyin.com/iUXcB5gG/"
-        await url_locator.fill(product_url)
-        await page.locator('span.cart-mybtn-jPFx5X:has-text("添加链接")').click()
-        product_title="【正版MC积木世界！】"
-        product_title_locator=page.locator('input.semi-input.semi-input-default[placeholder="请输入商品短标题"]')
-        await product_title_locator.click()
-        await product_title_locator.fill(product_title)
-        await page.locator('button.button-dhlUZE.modal-btn-rsq2u7.primary-cECiOJ:has-text("完成编辑")').click()
+        # # 添加标签 购物车
+        # await page.locator('div.semi-select.select-lJTtRL.semi-select-single').click()
+        # await page.locator('div.select-dropdown-option-video:has-text("购物车")').click()
+        # url_locator=page.locator('input.input-inner-JYpXOO.form-aMjYYj[placeholder="粘贴商品链接"]')
+        # await url_locator.click()
+        # product_url="0m:/. 07/04 W@M.Wz 【正版我的积木世界磁力方块全套mc吸铁石迷你世界磁吸拼搭磁铁玩具】复制此条消息打开抖音，查看商品详情。【ŠŠz82lO0lw65SpS8ŠŠ】	 https://v.douyin.com/iUXcB5gG/"
+        # await url_locator.fill(product_url)
+        # await page.locator('span.cart-mybtn-jPFx5X:has-text("添加链接")').click()
+        # product_title="【正版MC积木世界！】"
+        # product_title_locator=page.locator('input.semi-input.semi-input-default[placeholder="请输入商品短标题"]')
+        # await product_title_locator.click()
+        # await product_title_locator.fill(product_title)
+        # await page.locator('button.button-dhlUZE.modal-btn-rsq2u7.primary-cECiOJ:has-text("完成编辑")').click()
 
+
+        # 添加标签 游戏手柄
+        # await page.locator('div.semi-select.select-lJTtRL.semi-select-single').click()
+        # # await asyncio.sleep(9000000000)
+        # await page.locator('div.select-dropdown-option-video:has-text("游戏手柄")').click()
+        # # await asyncio.sleep(900000000000)
+        # await page.locator('input.input-inner-JYpXOO.form-aMjYYj[placeholder="添加作品同款游戏"]').click()
+        # # await page.locator('.anchor-game-option-content-khjJRL').click()
+        # await page.locator('.anchor-game-option-C_pqR6:nth-child(1) .anchor-game-option__rt-XhhIKL').click()
+        
        
         # 更换可见元素
         # await page.locator('div.semi-select span:has-text("输入地理位置")').click()
@@ -286,7 +324,7 @@ class DouYinVideo(object):
                 pass
             else:
                 await page.locator(third_part_element).locator('input.semi-switch-native-control').click()
-
+        # await asyncio.sleep(10000000)
         if self.publish_date != 0:
             await self.set_schedule_time_douyin(page, self.publish_date)
 
@@ -317,14 +355,7 @@ class DouYinVideo(object):
         # await page.locator('.order-name-ZRQUeW').click()
         # await page.locator('.my-btn-R4WFto:nth-child(2)').click()
 
-        # 挂载游戏手柄
-        # await page.locator('.semi-select-selection:nth-child(2) .semi-select-selection-text').click()
-        # input_locator = page.locator('.semi-select-input > .semi-input')
-        # # 输入游戏名称
-        # await input_locator.click()
-        # await page.keyboard.type("我的世界")
-
-        # await page.locator('.anchor-game-option-C_pqR6:nth-child(1) .anchor-game-option__rt-XhhIKL').click()
+        
 
 
         # 添加挑战贴纸

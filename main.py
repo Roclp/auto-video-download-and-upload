@@ -71,16 +71,16 @@ if __name__ == '__main__':
 
         douyin_cover_size=(1080, 1464)
         douyin_cover_path=os.path.join(temp_dir, f'{file_name}douyin.png')
-        doyin_cover=enhance_cover(old_cover_path, douyin_cover_size).save(douyin_cover_path, format='PNG')
+        enhance_cover(old_cover_path, douyin_cover_size).save(douyin_cover_path, format='PNG')
 
         # 快手使用抖音封面
         kuaishou_cover_size=(864, 516)
         kuaishou_cover_path=os.path.join(temp_dir, f'{file_name}kuaishou.png')
-        kuaishou_cover=enhance_cover(old_cover_path, kuaishou_cover_size).save(kuaishou_cover_path, format='PNG')
+        enhance_cover(old_cover_path, kuaishou_cover_size).save(kuaishou_cover_path, format='PNG')
 
         xigua_cover_size=(1920, 1080) 
         xigua_cover_path=os.path.join(temp_dir, f'{file_name}xigua.png')
-        xigua_cover=enhance_cover(old_cover_path, xigua_cover_size).save(xigua_cover_path, format='PNG')
+        enhance_cover(old_cover_path, xigua_cover_size).save(xigua_cover_path, format='PNG')
 
 
         for i in fenduan_video_list:

@@ -25,7 +25,7 @@ def split_video_ffmpeg(input_video, output_folder):
     # 上取整ceil
     # num_segments = math.ceil(total_duration / (5 * 60))
     # num_segments = math.ceil(total_duration / (4 * 60))
-    num_segments = math.ceil(total_duration / (5 * 60))
+    num_segments = math.ceil(total_duration / (3 * 60))
     segment_duration = total_duration / num_segments
     print(f"视频将分为{num_segments}段，平均每段时长为{segment_duration}秒")
 

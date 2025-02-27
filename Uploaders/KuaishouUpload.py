@@ -316,16 +316,17 @@ class KuaiShouVideo(object):
 
 
         # 新版
-        # 悬浮 _default-cover_y5cqm_68 _big_y5cqm_77
-        await page.locator('._default-cover_y5cqm_68._big_y5cqm_77').hover()
+        # 悬浮 _default-cover_1j1n1_86 _big_1j1n1_95
+        await page.locator('._default-cover_1j1n1_86._big_1j1n1_95').hover()
         await asyncio.sleep(0.2)
-        await page.locator('._cover-editor-text_y5cqm_58:has-text("编辑")').click()
+        await page.locator('._cover-full-editor_1j1n1_40:has-text("封面设置")').click()
         await asyncio.sleep(0.2)
-        await page.locator('.ant-btn.ant-btn-default:has-text("重选封面")').click()
+        await page.locator('._header-title-item_2t3fe_27:has-text("上传封面")').click()
         await asyncio.sleep(0.2)
-        await page.locator('#microSupport input[type=file][accept^="image/"]').set_input_files(self.cover_path)
+        await page.locator('#microSupport input[type=file][accept^="image/apng,image/bmp,image/ico,image/cur,image/jpg,image/jpeg,image/jfif,image/pjpeg,image/pjp,image/png,image/webp"]').set_input_files(self.cover_path)
         await asyncio.sleep(2)
-        await page.locator('.ant-btn.ant-btn-default._footer-btn_1nlbi_40:has-text("完成")').click()
+        # span 确认
+        await page.locator('span:has-text("确认")').click()
         await asyncio.sleep(5)
 
 
