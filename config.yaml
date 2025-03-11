@@ -36,6 +36,6 @@ kuaishou_cookie: 'Cookies/kuaishou.json'
 xigua_cookie: 'Cookies/xigua.json'
 
 # time_list: 7,9,11,13,15,17,19,21
-time_list: 8,10,13,15,17,19,22
+# time_list: 8,10,13,15,17,19,22
 # time_list: 8,11,14,16,19,21
-# time_list: 11,15,18,20
+time_list: 11,15,18,20
