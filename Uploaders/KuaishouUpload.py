@@ -333,7 +333,7 @@ class KuaiShouVideo(object):
         # await asyncio.sleep(1000000000)
         # 点击发布按钮
         # await page.locator('button:has-text("发布")').click()
-        await page.locator('._button_si04s_1._button-primary_si04s_60:has-text("发布")').click()
+        await page.locator('._button_3a3lq_1._button-primary_3a3lq_60:has-text("发布")').click()
 
 
         # if self.publish_date != 0:
