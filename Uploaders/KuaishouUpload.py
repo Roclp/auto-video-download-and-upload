@@ -139,7 +139,8 @@ class KuaiShouVideo(object):
             # 点击话题 添加#
             # await page.locator('span:has-text("#话题")').click()
             # 点击话题 “#” _quick-tips_10dx2_353 _quick-tips-topic_10dx2_372
-            await page.locator('._quick-tips_1axiz_353._quick-tips-topic_1axiz_372').click()
+            # _quick-tips_kt8tc_353 _quick-tips-topic_kt8tc_372
+            await page.locator('._quick-tips_kt8tc_353._quick-tips-topic_kt8tc_372').click()
             await asyncio.sleep(0.1)
             await page.type(title_selector, tag)
             await asyncio.sleep(0.5)
@@ -221,7 +222,7 @@ class KuaiShouVideo(object):
             try:
                 #  新版：定位重新上传
                 # number = await page.locator('span:has-text("上传成功")').count()
-                number = await page.locator('._tab_1ahzu_101:has-text("预览封面")').count()
+                number = await page.locator('._tab_1eni7_101:has-text("预览封面")').count()
                 if number > 0:
                     print("  [-]视频上传完毕")
                     break
