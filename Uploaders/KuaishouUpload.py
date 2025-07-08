@@ -139,8 +139,8 @@ class KuaiShouVideo(object):
             # 点击话题 添加#
             # await page.locator('span:has-text("#话题")').click()
             # 点击话题 “#” _quick-tips_10dx2_353 _quick-tips-topic_10dx2_372
-            # _quick-tips_kt8tc_353 _quick-tips-topic_kt8tc_372
-            await page.locator('._quick-tips_kt8tc_353._quick-tips-topic_kt8tc_372').click()
+            # _quick-tips_2klkp_353 _quick-tips-topic_2klkp_372
+            await page.locator('._quick-tips_2klkp_353._quick-tips-topic_2klkp_372').click()
             await asyncio.sleep(0.1)
             await page.type(title_selector, tag)
             await asyncio.sleep(0.5)
